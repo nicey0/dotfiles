@@ -1,0 +1,212 @@
+# Should you change your keyboard layout some time, delete
+# this file and re-run i3-config-wizard(1).
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+######################
+# i3 general configs #
+######################
+font pango:monospace 8
+
+#gaps inner 10
+#gaps outer 0
+
+default_border none
+
+#smart_gaps on
+#smart_gaps inverse_outer
+
+
+#############
+# Variables #
+#############
+set $mod Mod4
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: "
+set $ws4 "4: "
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8: "
+set $ws9 "9: ﭮ"
+set $ws10 "10: "
+
+
+##########
+# Colors #
+##########
+set $background #0c1b35bb
+set $iback #0b0b0baa
+set $border #1d2a4677
+set $iborder #1d2435aa
+set $frnt #ffffff
+set $ifrnt #888888
+set $indi #ffffffbb
+set $outer #ff0000bb
+set $invi #00000000
+
+# Window Decorations    border      background  foreground  indicator  child_border
+client.focused          $background $background $frnt       $indi      $outer
+client.unfocused        $iback      $iback      $ifrnt      $invi
+client.focused_inactive $iback      $iback      $ifrnt      $invi
+
+
+##############
+# Workspaces #
+##############
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+assign [class="firefox"] number $ws1
+assign [class="Keybase"] number $ws8
+assign [class="discord"] number $ws9
+assign [class="pulseeffects"] number $ws10
+assign [class="Spotify"] number $ws10
+
+
+###############
+# Keybindings #
+###############
+# Start applications
+bindsym $mod+Return exec --no-startup-id kitty
+bindsym $mod+Control+w exec firefox
+bindsym $mod+d exec --no-startup-id zsh -c "rofi -modi run#drun -show drun"
+bindsym Print exec --no-startup-id flameshot full -c
+
+# Spotify controls
+#bindsym $mod+Shift+p exec --no-startup-id dbus-send --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+#bindsym $mod+Shift+Left exec --no-startup-id dbus-send--dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+#bindsym $mod+Shift+Right exec --no-startup-id dbus-send --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+bindsym $mod+Shift+p exec --no-startup-id playerctl play-pause spotify
+bindsym $mod+Shift+Left exec --no-startup-id playerctl previous spotify
+bindsym $mod+Shift+Right exec --no-startup-id playerctl next spotify
+
+# Adjust volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute        exec --no-startup-id amixer set Master toggle
+bindsym $mod+Control+Up      exec --no-startup-id amixer set Master 1%+
+bindsym $mod+Control+Down    exec --no-startup-id amixer set Master 1%-
+
+# Use light to adjust screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U -r 5
+bindsym XF86MonBrightnessUp exec --no-startup-id sudo light -A -r 5
+
+# Lock screen
+bindsym $mod+Shift+x exec --no-startup-id $HOME/.scripts/lock
+
+# Keyboard layout
+bindsym $mod+Shift+i exec --no-startup-id $HOME/.scripts/ckb
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split direction
+bindsym $mod+c split h
+bindsym $mod+v split v
+
+# resize mode
+bindsym $mod+r mode "resize"
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# toggle tiling / floating
+bindsym $mod+Shift+f floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+Control+Space focus mode_toggle
+
+# Gaps
+#bindsym $mod+p gaps inner current plus 10
+#bindsym $mod+n gaps inner current minus 10
+#bindsym $mod+Control+p gaps inner current plus 5
+#bindsym $mod+Control+n gaps inner current minus 5
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Exit i3 (logs out of X session)
+bindsym $mod+Shift+e exec "i3-msg exit"
+
+
+########################
+# Startup applications #
+########################
+exec --no-startup-id polybar top
+exec --no-startup-id polybar bot
+exec --no-startup-id dunst
+exec --no-startup-id LD_PRELOAD=/usr/lib/spotify-adblock.so spotify
+#exec --no-startup-id nordvpn connect
+exec --no-startup-id flameshot
+exec --no-startup-id discord
+#exec --no-startup-id keybase-gui
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+
+#################
+# On i3 restart #
+#################
+#exec_always --no-startup-id $HOME/.scripts/wacomconfig
+exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wallpapers/current/w.*
+exec_always --no-startup-id picom -b -o 0.5 -r 25 -f -i 0.9 -I 0.05 -O 0.05 --config $HOME/.config/picom/config
+exec_always --no-startup-id $HOME/.scripts/reset_polybar
+exec_always --no-startup-id $HOME/.scripts/reset_dunst
+
+
+#########
+# Modes #
+#########
+mode "resize" {
+        bindsym h resize shrink width 50 px
+        bindsym j resize grow height 50 px
+        bindsym k resize shrink height 50 px
+        bindsym l resize grow width 50 px
+        bindsym Control+h resize shrink width 10 px
+        bindsym Control+j resize grow height 10 px
+        bindsym Control+k resize shrink height 10 px
+        bindsym Control+l resize grow width 10 px
+        bindsym $mod+r mode "default"
+}
+

@@ -1,0 +1,23 @@
+[section/base]
+include-file = $HOME/.config/polybar/colors.ini
+include-file = $HOME/.config/polybar/top.ini
+include-file = $HOME/.config/polybar/bot.ini
+
+[bar/top]
+modules-left = i3
+modules-center = xwindow
+modules-right = gcxkeyboard gxbacklight gpulseaudio gbattery gdate gtime
+;modules-right = sxkeyboard sxbacklight spulseaudio sbattery sdate stime
+
+[bar/bot]
+modules-right = aroot ahome avar acpu amemory
+;modules-right = sroot shome svar scpu smemory
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini
