@@ -56,23 +56,22 @@ filetype plugin indent on
 
 " Plugins
 call plug#begin()
-Plug 'sheerun/vim-polyglot'
-Plug 'exu/pgsql.vim'
-Plug 'cespare/vim-toml'
+"Plug 'sheerun/vim-polyglot'
+"Plug 'exu/pgsql.vim'
+"Plug 'cespare/vim-toml'
+"Plug 'vim-python/python-syntax'
+"Plug 'rust-lang/rust.vim'
+"Plug 'pangloss/vim-javascript'
+"Plug 'lervag/vimtex'
+"Plug 'OmniSharp/omnisharp-vim'
+"Plug 'nickspoons/vim-sharpenup'
 Plug 'tikhomirov/vim-glsl'
-Plug 'vim-python/python-syntax'
-Plug 'rust-lang/rust.vim'
 Plug 'mboughaba/i3config.vim'
 Plug 'wgwoods/vim-systemd-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'lervag/vimtex'
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'nickspoons/vim-sharpenup'
 Plug 'tpope/vim-markdown'
+Plug 'nvim-treesitter/nvim-treesitter'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-
-Plug 'Vimjas/vim-python-pep8-indent'
 
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
@@ -103,7 +102,8 @@ Plug 'morhetz/gruvbox'
 Plug 'adrian5/oceanic-next-vim'
 Plug 'kaicataldo/material.vim'
 Plug 'crusoexia/vim-monokai'
-Plug 'phanviet/vim-monokai-pro'
+Plug 'dracula/vim', { 'name': 'dracula' }
+Plug 'drewtempelmeyer/palenight.vim'
 
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
@@ -118,20 +118,35 @@ let g:python_highlight_all = 1
 let g:rustfmt_autosave = 1
 let g:OmniSharp_server_use_mono = 1
 let g:airline_theme = 'material'
-let g:indentguides_spacechar = "→"
-let g:indentguides_tabchar = "→"
+"let g:indentguides_spacechar = "→"
+"let g:indentguides_tabchar = "→"
+let g:indentguides_spacechar = "¦"
+let g:indentguides_tabchar = "¦"
 let g:Lf_WindowPosition = 'popup'
 let g:rainbow_active = 1
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    highlight = {
+        enable = true,              -- false will disable the whole extension
+    },
+}
+EOF
 
 " Colorsheme
 set background=dark
 
-"let g:material_terminal_italics = 1
+"let g:material_terminal_italics=1
 "let g:material_theme_style = 'palenight'
 "colo material
 " default | palenight | ocean | lighter | darker | default-community | palenight-community | ocean-community | lighter-community | darker-community
 
-colo onedark
+"colo palenight
+
+"colo dracula
+
+colo monokai
 
 "hi Normal ctermbg=none
 "hi LineNr ctermbg=none
@@ -184,11 +199,8 @@ xnoremap <C-h> g^
 xnoremap <C-l> g$
 onoremap <C-h> g^
 onoremap <C-l> g$
-inoremap {<Space> {<Space><Space>}<Esc>hha
 inoremap {<CR> {<CR>}<Esc>O
-inoremap (<Space> (<Space><Space>)<Esc>hha
 inoremap (<CR> (<CR>)<Esc>O
-inoremap [<Space> [<Space><Space>]<Esc>hha
 inoremap [<CR> [<CR>]<Esc>O
 inoremap <= <=
 inoremap >= >=
@@ -199,20 +211,15 @@ nnoremap <C-c> <S-v>:w !xclip -i -sel clipboard<CR><CR>
 xnoremap <C-c> :w !xclip -i -sel clipboard<CR><CR>
 
 " Shortcuts
-nnoremap <F1> :cd $HOME/Work/Projects<CR>
-nnoremap <F2> :tabe<Space>
 nnoremap <Bar> :TagbarToggle<CR><C-w>l
 nnoremap \ :NERDTreeToggle<CR>
-nnoremap <Leader>t :CocCommand<CR>
-nnoremap <Tab> :tabn<CR>
-nnoremap <S-Tab> :tabp<CR>
-nnoremap <F5> :source $MYVIMRC<CR>
+nnoremap <Leader>c :CocCommand<CR>
 " Git
 command -nargs=1 GitCommit :!git add .; git commit -m<Space><f-args>
-nnoremap <C-x>c :GitCommit<Space>
-nnoremap <C-x>l :!git log --oneline --all --graph<CR>
-nnoremap <C-x>p :!git push<CR>
-nnoremap <C-x>i :!git init
+nnoremap <Leader>gc :GitCommit<Space>
+nnoremap <Leader>gl :!git log --oneline --all --graph<CR>
+nnoremap <Leader>gp :!git push<CR>
+nnoremap <Leader>gi :!git init
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 aug i3config_ft_detection
